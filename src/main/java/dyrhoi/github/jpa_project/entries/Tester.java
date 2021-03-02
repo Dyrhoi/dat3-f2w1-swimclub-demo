@@ -1,4 +1,9 @@
-package dyrhoi.github.jpa_project.entities;
+package dyrhoi.github.jpa_project.entries;
+
+import dyrhoi.github.jpa_project.entities.Address;
+import dyrhoi.github.jpa_project.entities.Fee;
+import dyrhoi.github.jpa_project.entities.Person;
+import dyrhoi.github.jpa_project.entities.SwimStyle;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -21,6 +26,9 @@ public class Tester {
         Fee f2 = new Fee(200);
         Fee f3 = new Fee(400);
 
+        SwimStyle s1 = new SwimStyle("crawl");
+        SwimStyle s2 = new SwimStyle("butterfly");
+        SwimStyle s3 = new SwimStyle("breast stroke");
 
         p1.setAddress(a1);
         p2.setAddress(a2);
@@ -29,6 +37,12 @@ public class Tester {
         p1.addFee(f3);
         p2.addFee(f2);
 
+        p1.addSwimStyles(s1);
+        p1.addSwimStyles(s2);
+        p2.addSwimStyles(s1);
+        p2.addSwimStyles(s3);
+
+
         em.getTransaction().begin();
 
 //        em.persist(a1);
@@ -36,6 +50,10 @@ public class Tester {
         em.persist(p1);
         em.persist(p2);
 
+        em.getTransaction().commit();
+
+        em.getTransaction().begin();
+        p1.removeSwimStyle(s1);
         em.getTransaction().commit();
 
         System.out.println(p1);

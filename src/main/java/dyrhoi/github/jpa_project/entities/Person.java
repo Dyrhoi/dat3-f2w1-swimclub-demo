@@ -15,8 +15,11 @@ public class Person {
     @OneToOne(cascade = CascadeType.PERSIST)
     private Address address;
 
-    @OneToMany(mappedBy = "person",cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "person", cascade = CascadeType.PERSIST)
     private List<Fee> fees;
+
+    @ManyToMany(mappedBy = "persons", cascade = CascadeType.PERSIST)
+    private List<SwimStyle> swimStyles;
 
     public Person() {
     }
@@ -25,6 +28,7 @@ public class Person {
         this.name = name;
         this.year = year;
         this.fees = new ArrayList<>();
+        this.swimStyles = new ArrayList<>();
     }
 
     public Long getId() {
@@ -67,6 +71,20 @@ public class Person {
     public void addFee(Fee fee) {
         this.fees.add(fee);
         if(fee != null) fee.setPerson(this);
+    }
+
+    public List<SwimStyle> getSwimStyles() {
+        return swimStyles;
+    }
+
+    public void addSwimStyles(SwimStyle swimStyle) {
+        this.swimStyles.add(swimStyle);
+        if(swimStyle != null) swimStyle.addPerson(this);
+    }
+
+    public void removeSwimStyle(SwimStyle swimStyle) {
+        this.swimStyles.remove(swimStyle);
+        if(swimStyle != null) swimStyle.removePerson(this);
     }
 
     @Override
