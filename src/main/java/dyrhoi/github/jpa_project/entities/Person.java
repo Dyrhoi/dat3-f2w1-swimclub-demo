@@ -1,9 +1,6 @@
 package dyrhoi.github.jpa_project.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Person {
@@ -12,6 +9,8 @@ public class Person {
     private Long id;
     private String name;
     private int year;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private Address address;
 
     public Person() {
     }
@@ -19,10 +18,6 @@ public class Person {
     public Person(String name, int year) {
         this.name = name;
         this.year = year;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Long getId() {
@@ -45,12 +40,22 @@ public class Person {
         this.year = year;
     }
 
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+        if(address != null) address.setPerson(this);
+    }
+
     @Override
     public String toString() {
         return "Person{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", year=" + year +
+                ", address=" + address +
                 '}';
     }
 }

@@ -6,6 +6,7 @@
     <persistence-unit name="pu">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <class>dyrhoi.github.jpa_project.entities.Person</class>
+        <class>dyrhoi.github.jpa_project.entities.Address</class>
 
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/dolphin"/>
