@@ -9,6 +9,8 @@
         <class>dyrhoi.github.jpa_project.entities.Address</class>
         <class>dyrhoi.github.jpa_project.entities.Fee</class>
         <class>dyrhoi.github.jpa_project.entities.SwimStyle</class>
+        <class>dyrhoi.github.jpa_project.entities.Team</class>
+        <class>dyrhoi.github.jpa_project.entities.PersonTeam</class>
 
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/dolphin"/>

@@ -1,11 +1,13 @@
 package dyrhoi.github.jpa_project.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Entity
-public class Person {
+public class Person implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,6 +23,9 @@ public class Person {
     @ManyToMany(mappedBy = "persons", cascade = CascadeType.PERSIST)
     private List<SwimStyle> swimStyles;
 
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PersonTeam> teams;
+
     public Person() {
     }
 
@@ -29,6 +34,7 @@ public class Person {
         this.year = year;
         this.fees = new ArrayList<>();
         this.swimStyles = new ArrayList<>();
+        this.teams = new ArrayList<>();
     }
 
     public Long getId() {
@@ -87,13 +93,29 @@ public class Person {
         if(swimStyle != null) swimStyle.removePerson(this);
     }
 
+    public void addTeam(Team team, PersonTeam.SwimmerLevel level){
+        PersonTeam personTeam = new PersonTeam(this, team, level);
+        teams.add(personTeam);
+        team.getPersons().add(personTeam);
+    }
+
+    public void removeTeam(Team team){
+        Iterator<PersonTeam> iterator = teams.iterator();
+
+        while (iterator.hasNext()) {
+            PersonTeam pt = iterator.next();
+            if (pt.getPerson().equals(this) && pt.getTeam().equals(team)){
+                System.out.println("Flyt: " + pt.getLevel() + ". Name: " + pt.getPerson().getName());
+                iterator.remove();
+                pt.getTeam().getPersons().remove(pt);
+            }
+
+        }
+    }
+
     @Override
     public String toString() {
-        return "Person{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", year=" + year +
-                ", address=" + address +
-                '}';
+        return id + " : " + year + ", " + name + ". " + address;
     }
+
 }

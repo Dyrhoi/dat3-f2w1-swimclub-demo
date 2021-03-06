@@ -1,10 +1,11 @@
 package dyrhoi.github.jpa_project.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-public class Fee {
+public class Fee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -54,11 +55,6 @@ public class Fee {
 
     @Override
     public String toString() {
-        return "Fee{" +
-                "Person-name" + person.getName() + ": " +
-                "id=" + id +
-                ", amount=" + amount +
-                ", payDate=" + payDate +
-                '}';
+        return id + " : " + amount + "kr. - " + payDate;
     }
 }

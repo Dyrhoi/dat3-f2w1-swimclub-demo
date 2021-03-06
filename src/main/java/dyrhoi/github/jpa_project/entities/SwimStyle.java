@@ -1,11 +1,12 @@
 package dyrhoi.github.jpa_project.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class SwimStyle {
+public class SwimStyle implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -44,5 +45,10 @@ public class SwimStyle {
 
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
